@@ -26,6 +26,11 @@
         </div>
     </div>
 
+    <form action="" method="post">
+    {% csrf_token %}
+        <button type="submit">Enviar</button>
+    </form>
+
 {% endblock %}
 
 {% block footer %}
