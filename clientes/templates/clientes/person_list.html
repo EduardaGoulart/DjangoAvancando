@@ -2,5 +2,9 @@ Listagem de clientes:
 
 {% for person in object_list %}
     <br>
-    <a href="{% url 'person_list_cbv' person.id %}">{{ person }}</a>
+    <a href="{% url 'person_detail_cbv' person.id %}">{{ person }}</a>
 {% endfor %}
+
+<br>
+
+<a href="{% url 'person_create_cbv' %}">Novo</a>
