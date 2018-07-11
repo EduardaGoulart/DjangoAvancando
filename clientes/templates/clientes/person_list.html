@@ -1,6 +1,6 @@
 Listagem de clientes:
 
-<br>
 {% for person in object_list %}
-    {{ person }} - {{ person.age }}
+    <br>
+    <a href="{% url 'person_list_cbv' person.id %}">{{ person }}</a>
 {% endfor %}
