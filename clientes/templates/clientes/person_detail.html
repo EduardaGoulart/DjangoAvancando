@@ -1,3 +1,5 @@
+<h1>Person Detail</h1>
+
 <p>Name: {{ object }}</p>
 
 <p>Age: {{ object.age }}</p>
@@ -7,3 +9,5 @@
 <p>Bio: {{ object.bio }}</p>
 
 <p>Access Time: {{ now }}</p>
+
+<a href="{% url 'person_update_cbv' object.id %}">Update</a>
