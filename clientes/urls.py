@@ -7,6 +7,7 @@ from .views import PersonList
 from .views import PersonDetail
 from .views import PersonCreate
 from .views import PersonUpdate
+from .views import PersonDelete
 
 
 urlpatterns = [
@@ -18,4 +19,5 @@ urlpatterns = [
     path('person_detail/<int:pk>/', PersonDetail.as_view(), name="person_detail_cbv"),
     path('person_create/', PersonCreate.as_view(), name="person_create_cbv"),
     path('person_update/<int:pk>/', PersonUpdate.as_view(), name="person_update_cbv"),
+    path('person_delete/<int:pk>/', PersonDelete.as_view(), name="person_delete_cbv"),
 ]
