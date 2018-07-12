@@ -14,7 +14,8 @@ from django.urls import reverse_lazy
 @login_required
 def persons_list(request):
     persons = Person.objects.all()
-    return render(request, 'person.html', {'persons': persons})
+    footer_message = "Person list"
+    return render(request, 'person.html', {'persons': persons, 'footer_message': footer_message})
 
 
 @login_required
@@ -42,12 +43,13 @@ def persons_update(request, id):
 @login_required
 def persons_delete(request, id):
     person = get_object_or_404(Person, pk=id)
+    footer_message = "Delete Person"
 
     if request.method == 'POST':
         person.delete()
         return redirect('person_list')
 
-    return render(request, 'person_delete_confirm.html', {'person': person})
+    return render(request, 'person_delete_confirm.html', {'person': person, 'footer_message': footer_message})
 
 
 class PersonList(ListView):
