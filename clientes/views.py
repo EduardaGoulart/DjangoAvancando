@@ -74,7 +74,8 @@ class PersonUpdate(UpdateView):
     model = Person
     fields = ['first_name', 'last_name', 'age', 'salary', 'bio', 'photo']
 
-    success_url = reverse_lazy('person_list_cbv')
+    def get_success_url(self):
+        return reverse_lazy('person_list_cbv')
 
 class PersonDelete(DeleteView):
     model = Person
