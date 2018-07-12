@@ -1,5 +1,7 @@
+{% load my_tags %}
 <footer class="footer">
     <div class="container">
-        <span class="text-muted">Footer da parte de: {{ footer_message }}</span>
+        <span class="text-muted">Footer da parte de: {{ footer_message }}.
+        Time: {% current_time "%Y-%m-%d %I:%M %p" %}</span>
     </div>
 </footer>

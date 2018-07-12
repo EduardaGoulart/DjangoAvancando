@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load filters %}
+{% load my_tags %}
 
 {% block title %} Administracao {% endblock %}
 
@@ -60,8 +61,13 @@
 
     <br>
     {{ 1234567.098765432|arredonda:3 }}
+
+    <h3>Hora do servidor</h3>
+    {% current_time_context "%Y-%m-%d %I:%M %p" %}
+
 {% endblock %}
 
 {% block footer %}
     {% include 'footer.html' %}
+
 {% endblock %}
