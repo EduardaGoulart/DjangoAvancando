@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load filters %}
 
 {% block title %} Administracao {% endblock %}
 
@@ -20,6 +20,8 @@
                             <i class="fa fa-trash" aria-hidden="true"></i>
                         </a>
                     </li>
+                    {% empty %}
+                    <li>Sorry, this list is empty</li>
 
                 {% endfor %}
             </ul>
@@ -32,7 +34,7 @@
 
         <div class="col">
             {% if user.is_authenticated %}
-                <p>Ola {{user.username }}
+                <p>Ola {{ user.username }}
                     <a href="{% url 'logout' %}">
                         <span class="badge badge-dark">Sair</span>
                     </a>
@@ -42,7 +44,22 @@
         </div>
     </div>
 
+    {% filter force_escape|lower %}
+        This HTML will be HTML-escape
+    {% endfilter %}
+    <br>
 
+    {% if persons|length >= 4 %}
+        You have lots of message today
+    {% endif %}
+    {% now "d F Y H:i" %}
+
+    <br>
+
+    {{ footer_message|my_filter }}
+
+    <br>
+    {{ 1234567.098765432|arredonda:3 }}
 {% endblock %}
 
 {% block footer %}
