@@ -3,9 +3,9 @@ from django import template
 register = template.Library()
 
 
-@register.filter
-def my_filter(data):
-    return data + ' - ' + 'Alterada pelo filter'
+@register.simple_tag
+def footer_message():
+    return 'Desenvolvimento Django 2.0.2'
 
 
 @register.filter

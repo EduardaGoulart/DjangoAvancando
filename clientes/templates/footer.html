@@ -1,7 +1,15 @@
 {% load my_tags %}
+{% load filters %}
+
+
 <footer class="footer">
     <div class="container">
-        <span class="text-muted">Footer da parte de: {{ footer_message }}.
-        Time: {% current_time "%Y-%m-%d %I:%M %p" %}</span>
+
+        <span class="text-muted foot_message">{% footer_message %}.</span>
+        <div id="hora_server">
+            Time: {% current_time_context "%Y-%m-%d %I:%M %p" as the_time %}
+            {{ the_time }}
+        </div>
+
     </div>
 </footer>
