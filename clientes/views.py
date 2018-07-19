@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from .models import Person
+from .models import Person, Venda
 from .forms import PersonForm
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
@@ -58,9 +58,16 @@ class PersonList(ListView):
 class PersonDetail(DetailView):
     model = Person
 
+    # def get_object(self, queryset=None):
+    #     pk = self.kwargs.get(self.pk_url_kwarg)
+    #     return Person.objects.select__related('doc').get(pk=pk)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['now'] = timezone.now()
+        context['venda'] = Venda.objects.filter(
+            pessoa_id=self.object.id
+        )
         return context
 
 
@@ -77,6 +84,7 @@ class PersonUpdate(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('person_list_cbv')
+
 
 class PersonDelete(DeleteView):
     model = Person
