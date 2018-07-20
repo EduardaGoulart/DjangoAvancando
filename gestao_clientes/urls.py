@@ -34,3 +34,11 @@ if settings.DEBUG:
     urlpatterns = [
                       path('__debug__/', include(debug_toolbar.urls)),
                   ] + urlpatterns
+
+
+# Entrando no Admin
+admin.site.site_header = 'Gestão de Clientes'
+# Index da página
+admin.site.index_title = 'Administração'
+# Título da página de admin
+admin.site.site_title = 'Django avançado'

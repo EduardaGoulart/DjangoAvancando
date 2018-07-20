@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Person, Documento, Venda, Produto
-
+from .action import nfe_emitida
 
 class PersonAdmin(admin.ModelAdmin):
 
@@ -36,8 +36,9 @@ class VendaAdmin(admin.ModelAdmin):
     readonly_fields = ('total',)
     list_filter = ('pessoa__doc', 'desconto')
     raw_id_fields = ("pessoa",)
-    list_display = ('id', 'pessoa', 'total')
+    list_display = ('id', 'pessoa', 'total', 'nfe_emitida')
     search_fields = ('id', 'pessoa__first_name', 'pessoa__doc__num_doc')
+    actions = [nfe_emitida]
 
     def total(self, obj):
         return obj.get_total()
