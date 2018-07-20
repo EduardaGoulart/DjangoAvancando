@@ -19,17 +19,34 @@ class PersonAdmin(admin.ModelAdmin):
     # exclude = ['bio', ]
 
     # Exibe um grid com os campos selecionados. O primeiro field é o link
-    # list_display = ('first_name', 'last_name', 'age', 'salary', 'bio', 'photo', 'doc',)
+    list_display = ('first_name', 'last_name', 'age', 'salary', 'bio', 'tem_foto', 'doc',)
 
     # Filtra em categorias os dados do banco
     list_filter = ('age', 'salary',)
 
+    def tem_foto(self, obj):
+        if obj.photo:
+            return "Possui"
+        return "Não Possui"
+
+    tem_foto.short_description = 'Possui foto'
+
 
 class VendaAdmin(admin.ModelAdmin):
     list_filter = ('pessoa__doc', 'desconto')
+    list_display = ('id', 'pessoa', 'total')
+
+    def total(self, obj):
+        return obj.get_total()
+
+    total.short_description = 'Total'
+
+
+class ProdutoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'descricao', 'preco')
 
 
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Documento)
 admin.site.register(Venda, VendaAdmin)
-admin.site.register(Produto)
+admin.site.register(Produto, ProdutoAdmin)
