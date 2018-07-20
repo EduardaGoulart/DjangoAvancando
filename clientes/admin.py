@@ -33,6 +33,7 @@ class PersonAdmin(admin.ModelAdmin):
 
 
 class VendaAdmin(admin.ModelAdmin):
+    readonly_fields = ('total',)
     list_filter = ('pessoa__doc', 'desconto')
     raw_id_fields = ("pessoa",)
     list_display = ('id', 'pessoa', 'total')
