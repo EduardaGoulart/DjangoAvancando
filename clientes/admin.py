@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Person, Documento, Venda, Produto
 from .action import nfe_emitida, nfe_nao_emitida
 
+
 class PersonAdmin(admin.ModelAdmin):
 
     # Exibindo valores de forma organizada
@@ -24,6 +25,8 @@ class PersonAdmin(admin.ModelAdmin):
     # Filtra em categorias os dados do banco
     list_filter = ('age', 'salary',)
 
+    search_fields = ('id', 'first_name',)
+
     def tem_foto(self, obj):
         if obj.photo:
             return "Possui"
@@ -35,11 +38,17 @@ class PersonAdmin(admin.ModelAdmin):
 class VendaAdmin(admin.ModelAdmin):
     readonly_fields = ('total',)
     list_filter = ('pessoa__doc', 'desconto')
-    raw_id_fields = ("pessoa",)
+
+    # Pega o ID da pessoa e permite buscar na lista de pessoas
+    # raw_id_fields = ("pessoa",)
+
+    autocomplete_fields = ('pessoa', 'produtos')
     list_display = ('id', 'pessoa', 'total', 'nfe_emitida')
     search_fields = ('id', 'pessoa__first_name', 'pessoa__doc__num_doc')
     actions = [nfe_emitida, nfe_nao_emitida]
-    filter_horizontal = ['produtos']
+
+    # Organiza a seleção dos valores
+    # filter_horizontal = ['produtos']
 
     def total(self, obj):
         return obj.get_total()
@@ -49,6 +58,7 @@ class VendaAdmin(admin.ModelAdmin):
 
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = ('id', 'descricao', 'preco')
+    search_fields = ('id', 'nome', 'preco')
 
 
 admin.site.register(Person, PersonAdmin)
