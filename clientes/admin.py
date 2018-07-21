@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Person, Documento, Venda, Produto
+from .models import Person, Documento, Venda, ItensDoPedido
 from .action import nfe_emitida, nfe_nao_emitida
 
 
@@ -42,7 +42,7 @@ class VendaAdmin(admin.ModelAdmin):
     # Pega o ID da pessoa e permite buscar na lista de pessoas
     # raw_id_fields = ("pessoa",)
 
-    autocomplete_fields = ('pessoa', 'produtos')
+    autocomplete_fields = ('pessoa',)
     list_display = ('id', 'pessoa', 'total', 'nfe_emitida')
     search_fields = ('id', 'pessoa__first_name', 'pessoa__doc__num_doc')
     actions = [nfe_emitida, nfe_nao_emitida]
@@ -50,18 +50,19 @@ class VendaAdmin(admin.ModelAdmin):
     # Organiza a seleção dos valores
     # filter_horizontal = ['produtos']
 
-    def total(self, obj):
-        return obj.get_total()
+    # def total(self, obj):
+    #    return obj.get_total()
 
-    total.short_description = 'Total'
+    # total.short_description = 'Total'
 
 
-class ProdutoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'descricao', 'preco')
-    search_fields = ('id', 'nome', 'preco')
+# class ProdutoAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'descricao', 'preco')
+#     search_fields = ('id', 'nome', 'preco')
 
 
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Documento)
 admin.site.register(Venda, VendaAdmin)
-admin.site.register(Produto, ProdutoAdmin)
+# admin.site.register(Produto, ProdutoAdmin)
+admin.site.register(ItensDoPedido)
