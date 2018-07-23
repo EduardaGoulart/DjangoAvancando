@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from .models import Person, Venda
+from .models import Person
+from vendas.models import Venda
+from produtos.models import Produto
 from .forms import PersonForm
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
