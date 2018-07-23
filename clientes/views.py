@@ -62,8 +62,7 @@ class PersonDetail(DetailView):
 
     def get_object(self, queryset=None):
         pk = self.kwargs.get(self.pk_url_kwarg)
-        return Person.objects.select__related('doc').get(pk=pk)
-
+        return Person.objects.select_related('doc').get(pk=pk)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
