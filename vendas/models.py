@@ -19,7 +19,7 @@ class Venda(models.Model):
         tot = self.itemdopedido_set.all().aggregate(
             tot_ped=Sum((F('quantidade') * F('produto__preco')) - F('desconto'),
                         output_field=FloatField())
-        )['tot_ped']
+        )['tot_ped'] or 0
 
         tot = tot - float(self.impostos) - float(self.desconto)
         self.valor = tot
@@ -45,7 +45,7 @@ def update_vendas_total(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=Venda)
-def update_vendas_total(sender, instance, **kwargs):
+def update_vendas_total2(sender, instance, **kwargs):
     instance.calcular_total()
 
 
