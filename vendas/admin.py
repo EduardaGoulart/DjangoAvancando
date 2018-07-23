@@ -9,7 +9,7 @@ class ItemPedidoInLine(admin.TabularInline):
 
 
 class VendaAdmin(admin.ModelAdmin):
-    readonly_fields = ('total',)
+    readonly_fields = ('valor',)
     list_filter = ('pessoa__doc', 'desconto')
 
     # Pega o ID da pessoa e permite buscar na lista de pessoas
@@ -24,10 +24,10 @@ class VendaAdmin(admin.ModelAdmin):
     # Organiza a seleção dos valores
     # filter_horizontal = ['produtos']
 
-    # def total(self, obj):
-    #    return obj.get_total()
+    def total(self, obj):
+       return obj.calcular_total()
 
-    # total.short_description = 'Total'
+    total.short_description = 'Total'
 
 
 admin.site.register(Venda, VendaAdmin)
