@@ -1,17 +1,12 @@
 {% extends 'base.html' %}
 
 {% block main %}
- <div class="row">
-        <div class="col">
-
-
-        <div class="col-6">
-            <h1>Dashboard</h1>
-        </div>
-
-            {{ media }}
-
-
-    </div>
- </div>
+    <h1>Dashboard</h1>
+    <ul>
+        <li>Ticket medio: {{ media }}</li>
+        <li>Desconto medio: {{ media_desconto }}</li>
+        <li>Pedido com menor valor: {{ min }}</li>
+        <li>Pedido com maior valor: {{ max }}</li>
+        <li>Quantidade de items: {{ n_ped }}</li>
+    </ul>
 {% endblock %}
