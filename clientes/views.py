@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -21,6 +22,9 @@ def persons_list(request):
 
 @login_required
 def persons_new(request):
+    if not request.user.has_perm('clientes.add_person'):
+        return HttpResponse("Não autorizado")
+
     form = PersonForm(request.POST or None, request.FILES or None)
 
     if form.is_valid():
