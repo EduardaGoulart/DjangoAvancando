@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -6,6 +7,7 @@ from .models import Person
 from vendas.models import Venda
 from produtos.models import Produto
 from .forms import PersonForm
+from django.views import View
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
@@ -57,11 +59,11 @@ def persons_delete(request, id):
     return render(request, 'person_delete_confirm.html', {'person': person, 'footer_message': footer_message})
 
 
-class PersonList(ListView):
+class PersonList(LoginRequiredMixin, ListView):
     model = Person
 
 
-class PersonDetail(DetailView):
+class PersonDetail(LoginRequiredMixin, DetailView):
     model = Person
 
     def get_object(self, queryset=None):
@@ -77,14 +79,14 @@ class PersonDetail(DetailView):
         return context
 
 
-class PersonCreate(CreateView):
+class PersonCreate(LoginRequiredMixin, CreateView):
     model = Person
     fields = ['first_name', 'last_name', 'age', 'salary', 'bio', 'photo']
 
     success_url = reverse_lazy('person_list_cbv')
 
 
-class PersonUpdate(UpdateView):
+class PersonUpdate(LoginRequiredMixin, UpdateView):
     model = Person
     fields = ['first_name', 'last_name', 'age', 'salary', 'bio', 'photo']
 
@@ -92,7 +94,20 @@ class PersonUpdate(UpdateView):
         return reverse_lazy('person_list_cbv')
 
 
-class PersonDelete(DeleteView):
+class PersonDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Person
+    permission_required = ('clientes.deletar_clientes',)
 
     success_url = reverse_lazy('person_list_cbv')
+
+
+class ProdutoBulk(View):
+    def get(self, request):
+        produtos = ['Banana', 'Maca', 'Limao', 'Laranja', 'Pera', 'Melancia']
+        lista_produtos =[]
+        for produto in produtos:
+            p = Produto(descricao=produto, preco=10)
+            lista_produtos.append(p)
+
+        Produto.objects.bulk_create(lista_produtos)
+        return HttpResponse("funcionou")
