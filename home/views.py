@@ -13,7 +13,7 @@ def home(request):
     value1 = 10
     value2 = 20
     res = calcular(value1, value2)
-    return render(request, 'home.html', {'result': res})
+    return render(request, 'home/home.html', {'result': res})
 
 
 def my_logout(request):
